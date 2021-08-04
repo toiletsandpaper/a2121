@@ -507,10 +507,10 @@ from .models import TimeBlock, Resource
 class BulkReservationForm(forms.Form):
     from_date = forms.DateTimeField(required=True, widget=forms.DateTimeInput(
         format="%d/%m/%Y %H:%M:%S",
-        attrs={'type': 'datetime-local'}))
+        attrs={'type': 'date'}))
     to_date = forms.DateTimeField(required=True, widget=forms.DateTimeInput(
         format="%d/%m/%Y %H:%M:%S",
-        attrs={'type': 'datetime-local'}))
+        attrs={'type': 'date'}))
 
     def clean_to_date(self):
         from_date = self.cleaned_data['from_date']

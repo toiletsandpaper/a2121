@@ -703,7 +703,7 @@ def manage_reservations(request):
     ).distinct()
 
     for reservation in reservations:
-        reservation.timestamp = get_current_time(int(reservation.timestamp))
+        reservation.timestamp = get_current_time(int(reservation.timestamp or 3600 * 12))
 
     context={
         'reservations' : reservations,
