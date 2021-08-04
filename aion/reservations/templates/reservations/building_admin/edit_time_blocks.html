@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h2>Edit Block</h2>
+    <h3>{{ request.user.profile.location }}</h3>
+    <small class="helper-text">Disabled blocks will display in italics</small>
+    <a href="{% url 'new_time_block' %}" class="app-links" tabindex="1">New Block<span class="no-underline"><i class="fas fa-plus-circle"></i></span></a>
+
+    {% if time_blocks %}
+        {% for time_block in time_blocks %}
+            {% if block.enabled %}
+                <a href="{% url 'edit_time_block' time_block.id %}" class="app-links">{{ time_block.name }}<span class="no-underline"><i class="far fa-edit"></i></span></a>
+            {% else %}
+                <a href="{% url 'edit_time_block' time_block.id %}" class="app-links"><em>{{ time_block.name }}</em><span class="no-underline"><i class="far fa-edit"></i></span></a>
+            {% endif %}
+        {% endfor %}
+    {% else %}
+        <p>There are no blocks to edit.</p>
+        
+        <p>Create blocks for your building using the link above.</p>
+
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+  <a href="{% url 'index' %}">
+    <img class="brand brand-lg" src="{% static 'aion/aion-logo.svg' %}">
+  </a>
+  <h2>404</h2>
+  <h3>Sorry, I can't find that page.</h3>
+  <p>If there should be a page here, we may have made a mistake.
+  Please <a href="{% url 'contact' %}">contact</a> us and let us know.</p>
+  
+{% endblock %}

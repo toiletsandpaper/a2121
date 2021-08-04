@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+  <a href="{% url 'index' %}">
+    <img class="brand brand-lg" src="{% static 'aion/aion-logo.svg' %}">
+  </a>
+  <h2>500</h2>
+  <h3>Well, that's not a good sign.</h3>
+  <p>Sorry, you may not have access to this part of the site. 
+  If you should have access, try again in a few minutes.</p>
+  <p>If you continue to recieve this error, there may be something wrong.
+  Please <a href="{% url 'contact' %}">contact</a> us and let us know.</p>
+  
+{% endblock %}

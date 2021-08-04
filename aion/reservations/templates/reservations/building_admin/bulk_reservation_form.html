@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<h2>Объявить дисциплину</h2>
+<h3>{{ request.user.profile.location }}</h3>
+<form method="post" class="uniForm">
+    {% if messages %}
+    <!-- Error messaging -->
+        {% for message in messages %}
+            <div class="alert alert-block alert-danger">{{ message }}</div>
+        {% endfor %}
+    {% endif %}
+    
+    {% crispy bulk_reservation_form %}
+</form>
+{% endblock %}

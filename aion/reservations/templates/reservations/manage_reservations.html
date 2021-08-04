@@ -1,0 +1,228 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block modal %}
+    {{ block.super }}
+    <!-- Filter Modal -->
+    <div class="modal fade" id="filterModal" tabindex="-1" role="dialog" aria-labelledby="filterModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span class="modal-title" id="filterModalLabel">CLOSE</span>
+              <span class="modal-dismiss-icon" aria-hidden="true"><i class="fas fa-times-circle"></i></span>
+            </button>
+          </div>
+          <div class="modal-body">
+            {% if resources %}
+                {% for resource in resources %}
+                    {% if resource.enabled %}
+                <div class="form-group">  
+                  <div class="custom-control custom-switch">
+                    <input type="checkbox" data-onstyle="success" class="custom-control-input" id="customSwitch{{ resource.id }}" data-resource-id="{{ resource.id }}" checked>
+                    <label class="custom-control-label switch-label" for="customSwitch{{ resource.id }}">{{ resource.name }}</label>
+                  </div>
+                </div>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+            <div class="form-group">
+              <label for="datefilter" class="filter-label">Отфильтровать по дате</label>
+              <div class="input-group">
+                <input type="date" class="form-control date-filter" id="datefilter" name="datefilter" aria-label="Date Filter" aria-describedby="clear-date-filter-button">
+                <div class="input-group-append" id="clear-date-filter-button">
+                  <!--<button type="button" class="btn btn-primary" id="applyFilter" data-dismiss="modal" aria-label="Close">Filter</button>-->
+                  <button type="button" class="btn btn-secondary btn-addon" id="clearDateFilter">Очистить</button> 
+                </div>
+              </div><!-- /.input-group -->
+            </div><!-- /.form-group -->
+            <small id="dateError" class="text-danger"></small>
+          </div><!-- /.modal-body -->
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+{% endblock %}
+
+
+{% block menu %}
+    {% if request.user.is_authenticated  %}
+      <div class="text-right menu-link">
+        <a href="#" data-toggle="modal" data-target="#filterModal">ФИЛЬТР<span class="no-underline" aria-hidden="true">&nbsp;<i class="fas fa-filter" ></i></span>
+        <a href="#" data-toggle="modal" data-target="#menuModal">МЕНЮ<span class="no-underline" aria-hidden="true">&nbsp;<i class="fas fa-bars" ></i></span>
+        </a>
+      </div>
+    {% endif %}
+{% endblock %}
+      
+
+{% block content %}
+    <h2>Иои дисциплины</h2>
+    
+    <a 
+      href="{% url 'my_resources' %}" 
+      class="app-links"
+    ><span class="no-underline"><i class="fas fa-plus-circle"></i>&nbsp;</span>Новая дисциплина</a>
+    <div class="block-msg" id="blockMsg"></div>
+    {% if reservations %}
+        {% for reservation in reservations %}
+            <div 
+              class="reservation-block" data-reservation-id="{{ reservation.id }}" 
+              data-reservation-date="{{ reservation.date|date:'Y-m-d' }}"
+              data-resource-id="{{ reservation.resource.id }}"
+             >
+              <span class="reservation-link">
+                {{ reservation.date }} {{ reservation.timestamp }}<br>
+                {{ reservation.resource.name }}<br>
+                {{ reservation.time_block.name }}
+              </span>
+              <span class="reservation-status-icon"><i class="fas fa-check"></i></span>
+            </div>
+        {% endfor %}
+    {% endif %}
+    
+{% endblock %}
+
+{% block js %}
+<script src="{% static 'reservations/jquery-ajax-csrf.js' %}"></script>
+
+<script>
+/* global $ */
+$('document').ready(function(){
+    
+    countBlocks();
+    
+    // Modal Filter UI
+    $('#datefilter').on('change', function(){
+        enableDatefilter();
+    });
+    
+    $('.custom-control-input').on('change',function(){
+        if(this.checked){
+            enableBySwitch(this.dataset.resourceId);
+            // enableBySwitch($(this).attr('data-resource-id'));
+        }else{
+          disableBySwitch(this.dataset.resourceId);
+          // disableBySwitch($(this).attr('data-resource-id'));
+        }
+    });
+  
+    
+    $('#clearDateFilter').on('click', function(){
+        disableDateFilter();
+    });
+    
+    $('.reservation-link').on('click', function(){
+        $('.reservation-status-icon').removeClass('reservation-clicked').html('<i class="fas fa-check"></i>');
+    });
+    
+    $('.reservation-status-icon').on('click', function(){
+        if($(this).hasClass('reservation-clicked')){
+            
+            // Ajax request to cancel reservation:
+            var reservation_id = $(this).parent().attr('data-reservation-id');
+            var node = $(this).parent();
+            
+            $.ajax({
+                type:'POST',
+                url: '/ajax/cancel-reservation/',
+                data: {
+                  'reservation_id': reservation_id
+                },
+                dataType: 'json',
+                success: function(){
+                    node.hide(1000, function(){
+                        this.remove();
+                        countBlocks();
+                    });
+                }
+            });
+            
+        }else{
+            $(this).addClass('reservation-clicked').html('<i class="fas fa-times-circle"></i>');
+        }
+    });
+});
+
+function disableBySwitch(resource_id){
+    $('.reservation-block').each(function(){
+        if(this.dataset.resourceId == resource_id){
+            $(this).hide(500, function(){
+                countBlocks();
+            });
+        }
+    });
+    
+}
+
+
+function enableBySwitch(resource_id){
+    $('.reservation-block').each(function(){
+        if(this.dataset.resourceId == resource_id){
+            $(this).show(500);
+        }
+    });
+    countBlocks();
+}
+
+
+function disableDateFilter(){
+    /**Reset date input, error msg, and blocks
+     */
+   
+    $('#datefilter').val('');
+    $('#dateError').html('');
+    $('.reservation-block').each(function(){
+        $(this).show(500);
+    });
+    countBlocks();
+}
+
+function enableDatefilter(){
+    /**Validate date and hide matching blocks
+    */
+       
+    // Validate in local timezone
+    var targetdate = new Date($('#datefilter').val());
+    targetdate.setMinutes(targetdate.getMinutes() + targetdate.getTimezoneOffset());
+    var now = new Date();
+    
+    if(isNaN(targetdate)){ 
+        // invalid date
+        $('#dateError').html('Некорректный формат даты');
+        return;
+    }else if(targetdate<now){ 
+        // Date in past
+        $('#dateError').html('Дата не может быть в прошлом');
+        return;
+    }else{ 
+        // Valid date
+        $('#dateError').html(''); // clear error msg
+    
+        $('.reservation-block').each(function(){
+            var d = new Date(this.dataset.reservationDate);
+            d.setMinutes(d.getMinutes() + d.getTimezoneOffset());
+            
+            if(d.getTime() == targetdate.getTime()){
+                // Target Date
+                $(this).show(500);
+            }else{
+                // Not Target Date
+                $(this).hide(500);
+            }
+        });
+        countBlocks();
+    }
+}
+
+function countBlocks(){
+    var i= $('.reservation-block').length - $(".reservation-block > :hidden").parent().length;
+    
+    if(i<1){
+        $('#blockMsg').html('Нет дисциплин для показа.');
+    }else{
+        $('#blockMsg').html('');
+    }
+}
+</script>
+
+{% endblock %}

@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+  <a href="{% url 'index' %}">
+    <img class="brand brand-lg" src="{% static 'aion/aion-logo.svg' %}">
+  </a>
+  <h2>Контакты</h2>
+  <div>
+      {% crispy contact_form %}
+  </div>
+
+  
+{% endblock %}
+
+{% block js %}
+<script>
+    $('#id_captcha_1').addClass('form-control').attr('placeholder', 'Enter Captcha Text');
+</script>
+{% endblock %}

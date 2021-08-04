@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<h2>Edit Admin Access</h2>
+<h3>{{ request.user.profile.location }}</h3>
+<h4>
+    {{ profile.user }}
+    {% if profile.user.first_name %}
+    ({{ profile.user.first_name }} {{ profile.user.last_name }})
+    {% endif %}
+</h4>
+<form method="post" class="uniForm">
+    {% if messages %}
+    <!-- Error messaging -->
+        {% for message in messages %}
+            <div class="alert alert-block alert-danger">{{ message }}</div>
+        {% endfor %}
+    {% endif %}
+    
+    {% crispy edit_school_admin_form %}
+    
+    
+</form>
+{% endblock %}

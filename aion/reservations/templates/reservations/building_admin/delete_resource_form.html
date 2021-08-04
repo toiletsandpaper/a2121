@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<h2>Удалить дисциплину</h2>
+<h3>{{ request.user.profile.location }}</h3>
+<a href="{% url 'edit_resource' resource.id %}" class="app-links">{{ resource.name }}<span class="no-underline"><i class="far fa-edit"></i></span></a>
+<small class="helper-text helper-text-block">
+    Удаление дисциплины так же удаляет все ресурсы, связанные с ним..<br>
+    Это действие не может быть отменено. 
+</small>
+<form method="post" class="uniForm">
+    {% if messages %}
+    <!-- Error messaging -->
+        {% for message in messages %}
+            <div class="alert alert-block alert-danger">{{ message }}</div>
+        {% endfor %}
+    {% endif %}
+    
+    {% crispy delete_resource_form %}
+</form>
+{% endblock %}

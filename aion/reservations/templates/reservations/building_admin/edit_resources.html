@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h2>Edit a Resource</h2>
+    <h3>{{ request.user.profile.location }}</h3>
+    <small class="helper-text">Disabled resources will display in italics</small>
+    <a href="{% url 'new_resource' %}" class="app-links" tabindex="1">New Resource<span class="no-underline"><i class="fas fa-plus-circle"></i></span></a>
+
+    {% if resources %}
+        {% for resource in resources %}
+            {% if resource.enabled %}
+                <a href="{% url 'edit_resource' resource.id %}" class="app-links">{{ resource.name }}<span class="no-underline"><i class="far fa-edit"></i></span></a>
+            {% else %}
+                <a href="{% url 'edit_resource' resource.id %}" class="app-links"><em>{{ resource.name }}</em><span class="no-underline"><i class="far fa-edit"></i></span></a>
+            {% endif %}
+        {% endfor %}
+    {% else %}
+        <p>There are no resources to edit.</p>
+        
+        <p>Create resources for your building using the link above.</p>
+
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,8 @@
+# Database
+db.sqlite3
+
+# My Notes
+devnotes.md
+
+# Text backup files
+*.bak

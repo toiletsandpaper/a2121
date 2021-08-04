@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h2>Выберите пользователя</h2>
+    <h3>{{ request.user.profile.location }}</h3>
+    <small class="helper-text">
+        Выберите пользователя, чтобы выдать правда админа. <br>
+        Админы будут отображены курсивом.
+    </small>
+    
+    {% if profiles %}
+        {% for profile in profiles %}
+            <a href="{% url 'edit_school_admin' profile.id %}" class="app-links">
+                {% if profile.school_admin %}<em>{% endif %}
+                
+                {% if profile.user.get_full_name|length < 1 %}
+                    {{ profile.user }}
+                {% else %}
+                    {{ profile.user.get_full_name }}
+                {% endif %}
+                
+                
+                {% if profile.school_admin %}</em>{% endif %}
+            <span class="no-underline"><i class="far fa-edit"></i></span></a>
+        {% endfor %}
+    {% else %}
+        <p>Нет пользователей для выбора.</p>
+        
+    {% endif %}
+{% endblock %}

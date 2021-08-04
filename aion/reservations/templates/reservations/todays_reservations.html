@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <h2>Дисциплины сегодня</h2>
+    <h3 class="date-nav">Сегодня {% now 'N j' %}</h3>
+    <a 
+      href="{% url 'my_resources' %}" 
+      class="app-links"
+    >Новая дисциплина<span class="no-underline">&nbsp;<i class="fas fa-plus-circle"></i></span></a>
+    <div class="block-msg" id="blockMsg"></div>
+    {% if reservations %}
+        {% for reservation in reservations %}
+            <div class="reservation-block" data-reservation-id='{{ reservation.id }}'>
+              <span class="reservation-link">
+                {{ reservation.resource.name }}<br>{{ reservation.time_block.name }}
+              </span>
+              <span class="reservation-status-icon"><i class="fas fa-check"></i></span>
+            </div>
+        {% endfor %}
+    {% endif %}
+    
+{% endblock %}
+
+{% block js %}
+<script src="{% static 'reservations/jquery-ajax-csrf.js' %}"></script>
+
+<script>
+/* global $ */
+$('document').ready(function(){
+        
+    countBlocks();
+    
+    $('.reservation-link').on('click', function(){
+        $('.reservation-status-icon').removeClass('reservation-clicked').html('<i class="fas fa-check"></i>');
+    });
+    
+    $('.reservation-status-icon').on('click', function(){
+        if($(this).hasClass('reservation-clicked')){
+            
+            // Ajax request to cancel reservation:
+            var reservation_id = $(this).parent().attr('data-reservation-id');
+            var node = $(this).parent();
+            
+            $.ajax({
+                type:'POST',
+                url: '/ajax/cancel-reservation/',
+                data: {
+                  'reservation_id': reservation_id
+                },
+                dataType: 'json',
+                success: function(){
+                    node.hide(1000, function(){
+                        this.remove();
+                        countBlocks();
+                    });
+                }
+            });
+            
+        }else{
+            $(this).addClass('reservation-clicked').html('<i class="fas fa-times-circle"></i>');
+        }
+    });
+});
+
+function countBlocks(){
+    var i=$('.reservation-block').length;
+    if(i<1){
+        $('#blockMsg').html('Нет дисциплин для показа.');
+    }else{
+        $('#blockMsg').html('');
+    }
+}
+</script>
+{% endblock %}

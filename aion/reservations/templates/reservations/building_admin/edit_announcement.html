@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<h2>Изменить объявление</h2>
+<h3>{{ request.user.profile.location }}</h3>
+<form method="post" class="uniForm">
+    {% if messages %}
+    <!-- Error messaging -->
+        {% for message in messages %}
+            <div class="alert alert-block alert-danger">{{ message }}</div>
+        {% endfor %}
+    {% endif %}
+    
+    {% crispy edit_announcement_form %}
+    
+    <div class="form-group delete-group">
+        <i class="fas fa-exclamation-triangle"></i> 
+        <a href="{% url 'delete_announcement' announcement.id %}" class="delete-link">УДАЛИТЬ ОБЪЯВЛЕНИЕ</a>
+    </div>
+    
+</form>
+{% endblock %}

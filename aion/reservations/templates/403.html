@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+  <a href="{% url 'index' %}">
+    <img class="brand brand-lg" src="{% static 'aion/aion-logo.svg' %}">
+  </a>
+  <h2>403</h2>
+  <h3>Something is out of sync.</h3>
+  <p>This may have happened because of a form error. Try returning to the 
+  <a href="{% url 'home' %}">Home</a> page and trying again.</p>
+  <p>If you continue to recieve this error, there may be something wrong.
+  Please <a href="{% url 'contact' %}">contact</a> us and let us know.</p>
+  
+{% endblock %}

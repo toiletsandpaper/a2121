@@ -1,0 +1,16 @@
+{% load crispy_forms_field %}
+
+<div class="form-group">
+  <div class="custom-control custom-switch {% for offset in bootstrap_checkbox_offsets %}{{ offset }} {% endfor %}{{ field_class }}">
+    {% crispy_field field 'class' 'custom-control-input form-check-input' %}
+    <label for="{{ field.id_for_label }}" class="custom-control-label custom-control-label-form switch-label form-check-label{% if field.field.required %} requiredField{% endif %}">
+      {{ field.label|safe }}{% if field.field.required %}<span class="asteriskField">*</span>{% endif %}
+    </label>
+    {% include 'bootstrap4/layout/help_text_and_errors.html' %}
+  </div>
+  <small class="helper-text helper-text-block">
+      Disabling a resource prevents members from viewing 
+      and reserving it. Disabled resources will display in 
+      italics on the edit resources page.
+    </small>
+</div>

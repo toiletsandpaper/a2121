@@ -1,0 +1,94 @@
+/* Sticky footer styles
+--------------------------------------------------- */
+html {
+  position: relative;
+  min-height: 100%;
+}
+body {
+  margin-bottom: 60px; /* Margin bottom by footer height */
+}
+.footer {
+  margin:0;
+  position: absolute;
+  bottom: 0;
+  width:100%;
+  border-top: 1px #ccc solid;
+  /* height: 60px; /* Set the fixed height of the footer here */
+  line-height: 60px; /* Vertically center the text there */
+}
+.brand-header{
+  text-align: center;
+  padding-top:5px;
+  padding-bottom: 20px;
+  width: 100%;
+  border-bottom: 1px #ccc solid;
+}
+.brand{
+  display: inline-block;
+}
+.brand a{
+  text-decoration: none;
+}
+
+/* Room Cal View Styles
+--------------------------------------------------- */
+
+.table>tbody>tr>td, 
+.table>tbody>tr>th, 
+.table>tfoot>tr>td, 
+.table>tfoot>tr>th, 
+.table>thead>tr>td, 
+.table>thead>tr>th{
+  text-align: center;
+  width:20%;
+}
+
+.table>tbody>tr>td, 
+.table>tbody>tr>th{
+  padding:0;
+}
+
+.period{
+  margin-left: 5px;
+  margin-top: 5px;
+  width:30px;
+  height:30px;
+  padding-top:4px;
+  background-color: #eee;
+  border-radius: 100px;
+}
+
+.booking-control{
+  padding:5px;
+}
+
+.booking-text{
+  padding: 5px;
+}
+/* General Button Styles
+--------------------------------------------------- */
+.booking-controls {
+    white-space: nowrap;
+}
+.booking-controls a{
+  margin: 5px
+}
+/* Navs */
+.nav-link{
+  border: #007bff 1px solid; 
+}
+.user-nav .nav-link{
+  margin:15px;
+}
+.pagination{
+  padding-bottom:15px;
+  padding-top: 15px;
+}
+
+/* Forms
+-------------------------------------------------- */
+form{
+  padding-bottom: 15px;
+}
+
+

@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h2>Выберите дисциплину</h2>
+    <h3>{{ location }}</h3>
+    <hr>
+    {% if favorites %}
+        <h5>Важные дисциплины</h5>
+        {% for fav in favorites %}
+            <a href="{% url 'reserve_resource' fav.id %}" class="app-links">{{ fav.name }}<span class="no-underline" aria-hidden="true"><i class="fas fa-bookmark"></i></span></a>
+        {% endfor %}
+    {% endif %}
+    
+    {% if resources %}
+        <h5>Дисциплины</h5>
+        {% for resource in resources %}
+
+            <a href="{% url 'reserve_resource' resource.id %}" class="app-links">{{ resource.name }}</a>
+
+        {% endfor %}
+    {% else %}
+        <p>Нет зарезервированных дисциплин для показа.</p>
+        
+        {% if request.user.profile.school_admin %}
+        <p>Используйте админ панель заведения, чтобы создать дисциплины и прочее.</p>
+            <a href="{% url 'building_admin' %}" class="app-links">Админ Панель Заведения</a>
+        {% endif %}
+    {% endif %}
+{% endblock %}

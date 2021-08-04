@@ -1,0 +1,134 @@
+/* Sticky footer styles
+--------------------------------------------------- */
+html {
+  position: relative;
+  min-height: 100%;
+}
+body {
+    margin-bottom: 80px; /* Margin bottom by footer height */
+}
+main.container{
+    padding-bottom:50px;
+    max-width: 400px;
+}
+.footer {
+  margin:0;
+  position: absolute;
+  bottom: 0;
+  padding-top: 30px;
+  width:100%;
+  height: 80px; /* Set the fixed height of the footer here */
+  background-color: #3F403F
+}
+footer div.container{
+    max-width: 300px;
+    font-size: .8rem;
+    color: #E6E8E6;
+    font-family: 'Roboto', sans-serif;
+    text-transform: uppercase;
+}
+footer a{
+   color: #E6E8E6;
+   text-decoration: none;
+}
+footer a:hover{
+    color: #fff;
+    text-decoration: underline;
+}
+
+/** Aion Styles **/
+body{
+    background-color:#3f403f;
+}
+.clock-bg{
+    width: 180px;
+    position: absolute;
+    top: -15px;
+    left: 50%;
+    transform: translate(40%);
+}
+.brand{
+	/*   -webkit-transition: all .5s; /* For Safari 3.1 to 6.0 */
+    /*   transition: all .5s;*/
+}
+.brand:hover{
+    /*    width: 225px;*/
+}
+.brand-lg{
+    -webkit-filter: drop-shadow( 7px 7px 6px rgba(0, 0, 0, 0.8) ); 
+	filter: drop-shadow( 7px 7px 6px rgba(0, 0, 0, 0.8) );
+    width:200px;
+	margin:20px 50px 50px 50px;
+}
+.brand-sm-footer{
+    -webkit-filter: drop-shadow( 5px 5px 4px rgba(0, 0, 0, 0.8) ); 
+	filter: drop-shadow( 5px 5px 3px rgba(0, 0, 0, 0.8) );
+    width:120px;
+    position: absolute;
+    bottom: 40px;
+    left: 0;
+    right: 0;
+    margin: auto
+}
+
+.popover-body ul{
+    padding-left:15px;
+}
+
+h1, h2, h3, h4, h5, h6, p, a, small, button, btn, div, legend, li{
+    color: #E6E8E6;
+    font-family: "Roboto Condensed", sans-serif;
+}
+
+h3, legend{
+    font-size:1.5rem;
+}
+
+p{
+    text-align: left;
+}
+
+#error_1_id_captcha{
+    display: block !important;
+}
+
+#div_id_captcha div{
+    border:solid #E6E8E6 1px;
+    border-radius:10px;
+    padding: 20px;
+}
+
+#div_id_captcha img{
+    margin:auto;
+    display: block;
+    margin-bottom:20px;
+}
+
+.alert-danger ul{
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.alert-danger li{
+    color: #721c24;
+}
+.text-danger, .invalid-feedback {
+    display:block;
+    position: relative;
+    padding: .75rem 1.25rem;
+    margin-bottom: 1rem;
+    border: 1px solid transparent;
+    border-radius: .25rem;
+    color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+}
+
+.text-danger:empty{
+    display:none;
+}
+
+ol, ul{
+    text-align: left;
+}

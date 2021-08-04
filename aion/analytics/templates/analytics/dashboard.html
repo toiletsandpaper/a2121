@@ -1,0 +1,177 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block css %}
+<style>
+    main.container{
+        max-width:100%;
+    }
+    main.dashboard{
+        background-color:white;
+        margin: 20px 0;
+        padding:20px;
+        border-radius:20px;
+    }
+    h1{
+        text-align:center;
+    }
+    .menu-link{
+        max-width:400px;
+        margin:auto;
+    }
+    .menu-link a:hover, .close:hover{
+        color:#CED0CE;
+        text-decoration:none;
+    }
+</style>
+{% endblock %}
+{% block modal %}{% endblock %}
+{% block menu %}
+    <div class="text-right menu-link">
+        <a href="{% url 'home' %}" title="home">
+            <span class="no-underline" aria-hidden="true">&nbsp;<i class="fas fa-home" ></i>&nbsp;HOME</span>
+        </a>
+    </div>
+{% endblock %}
+
+{% block content %}
+<h1>Dashboard</h1>
+<main id="dashboard" class="container dashboard">
+    <div class="row">
+        <div class="col-sm">
+            <canvas id="lifetime_totals"></canvas>
+        </div>
+        <div class="col-sm">
+            <canvas id="current_totals"></canvas>
+        </div>
+    </div>
+</main>
+
+{% endblock %}
+
+
+{% block js %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
+<script>
+    var lifetime_aion_stats_url = 'ajax/lifetime-aion-stats/';
+    var lifetime_school_stats_url = 'ajax/lifetime-school-stats/';
+    
+    // Initiate school totals chart
+    $.ajax({
+        url:lifetime_school_stats_url,
+    }).done(function(response){
+        Object.keys(response.datasets).forEach(function(key,index){
+            var canvas = document.createElement('canvas');
+            canvas.id = 'school_stats'+index;
+            var col = document.createElement('div')
+            col.className='col'
+            var row = document.createElement('div')
+            row.className = 'row'
+            
+            document.getElementById('dashboard').appendChild(row).appendChild(col).appendChild(canvas)
+            
+            org_chart(
+                'school_stats'+index, // target
+                response.labels, // Chart Labels
+                response.datasets[key], // Data for Schools in Org
+                key // Org Name
+            )
+        })
+        
+    });
+    
+    // Initiate lifetime totals chart
+    $.ajax({
+        method:'GET',
+        url: lifetime_aion_stats_url,
+    }).done(function(data){
+        var totals_labels=data.labels;
+        var totals_data=data.chart_data;
+        pie_chart('lifetime_totals', totals_labels, totals_data, 'Lifetime Stats');
+    }).fail(function(error_data){
+        console.log('error');
+        console.log(error_data);
+    });
+        
+    function org_chart(target, labels, datasets, org_name){
+        // Get the colors for each school in chart
+        bgcolors = background_colors(datasets.length);
+        bcolors = border_colors(datasets.length);
+        
+        datasets.forEach(function(d, i){
+            // Iterate through each school.
+            d.backgroundColor = bgcolors[i];
+            d.borderColor = bcolors[i]
+            d.borderWidth=1
+        });
+        
+        var ctx = document.getElementById(target).getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: datasets,
+            },
+            options: {
+                title:{
+                    display:true,
+                    text:org_name,
+                },
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
+    }
+    
+    
+    function pie_chart(target, labels, data_points, title_label){
+        var ctx = document.getElementById(target).getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels: labels,
+                datasets: [{
+                    data: data_points,
+                    backgroundColor: background_colors(labels.length), 
+                    borderColor: border_colors(labels.length),
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                legend:{
+                  position:'left',  
+                },
+                title:{
+                    display:true,
+                    text:title_label,
+                },
+            }
+        });
+    }
+    
+    function background_colors(n){
+        // Returns an array of hsla colors
+        colors=[]
+        for(i=0; i<n;i++){
+            h=i*360/n;
+            colors.push('hsla('+h+', 75%, 75%, 0.2)');
+        }
+        return colors
+    }
+    
+    function border_colors(n){
+        // returns an array of hsl colors
+        colors=[]
+        for(i=0; i<n;i++){
+            h=i*360/n;
+            colors.push('hsl('+h+', 75%, 75%)');
+        }
+        return colors
+    }
+    </script>
+{% endblock %}

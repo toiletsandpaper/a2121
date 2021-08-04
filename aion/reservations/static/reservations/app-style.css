@@ -1,0 +1,337 @@
+h2{
+    font-size: 2rem;
+    color: #E6E8E6;
+}
+
+main.container{
+    text-align: center;
+}
+
+.helper-text{
+    color: #E6E8E6;
+    padding:5px;
+}
+.helper-text-block{
+    display:block;
+    text-align:left;
+    margin-bottom:10px;
+}
+.helper-text-attn{
+   border:#76ce6f solid 1px;
+}
+i{
+    font-style: normal;
+}
+
+/** App Links ****************************************************************/
+.app-links {
+    display: block;
+    color: #E6E8E6;
+    border:#E6E8E6 solid 1px;
+    text-align: left;
+    text-decoration: underline;
+    text-transform: capitalize;
+    font-size: 1.2rem;
+    padding: 10px 20px;
+    margin: 20px auto;
+}
+
+.app-links:hover, .app-links:focus, .app-links:active {
+    color: #4c7f35;
+    background-color: #E6E8e6;
+}
+
+.app-links>span{
+   float:left;
+   margin-right: 20px;
+}
+
+.no-underline{
+    text-decoration:none;
+    display: inline-block;
+}
+
+.app-links i{
+    margin-left: 10px;
+    font-size: 1rem;
+}
+.modal-content .app-links {
+    border:none;
+    margin: 10px auto;
+    text-align: center;
+}
+
+/** Menu Links ***************************************************************/
+a{
+    color: #E6E8E6;
+    text-decoration: underline;
+}
+a:hover{
+    color:#CED0CE;
+}
+
+.filter-label{
+    color: #E6E8E6;
+    text-transform: uppercase;
+}
+
+.menu-link a {
+    display: inline-block;
+    color: #E6E8E6;
+    text-decoration: underline;
+    font-size: 1rem;
+    margin:10px;
+    padding:0;
+}
+
+.menu-link a:last-child{
+    margin-right:0;
+}
+
+.menu-link a:hover, .close:hover{
+    color:#CED0CE;
+}
+
+.modal-title{
+    font-weight:normal;
+    font-size: 1rem;
+    text-decoration: underline;
+}
+
+.modal-dismiss-icon{
+    font-size: 1rem;
+}
+
+.modal-header{
+    padding:5px 16px 0 16px;
+    border:none;
+}
+.modal-header button{
+    text-shadow:none;
+    color: #E6E8E6;
+    opacity:1;
+}
+
+.modal-body{
+    padding-top: 5px;
+}
+
+.modal-content{
+    background-color: #3f403f;
+}
+
+
+/** Reservation Links ********************************************************/
+
+.reservation-block{
+    /*display: flex;*/
+    justify-content: space-between;
+    /*align-items: center;*/
+    text-align:left;
+    /*padding-left:5px;*/
+    background-color: #E6E8e6;
+    /*height:90px;*/
+    margin: 10px auto;
+}
+
+.reservation-block span{
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.reservation-link{
+    padding:5px;
+    color: #4c7f35;
+    white-space: nowrap;
+    width:100%;
+}
+
+.reservation-status-icon{
+    -webkit-transition-property: all; /* Safari */
+    -webkit-transition-duration: 0.5s; /* Safari */
+    transition-property: all;
+    transition-duration: 0.5s;
+    padding: 0 20px;
+    /*height:100%;*/
+    background-color: #9FB8AD;
+
+}
+
+.reservation-clicked{
+    -webkit-transition-property: all; /* Safari */
+    -webkit-transition-duration: 0.5s; /* Safari */
+    transition-property: all;
+    transition-duration: 0.5s;
+    background-color: #CED0CE;
+    font-size: 1.5rem;
+    /*padding-top:25px;*/
+    color:#9e0514;
+}
+
+.date-filter{
+    text-align:center;
+}
+
+.reservation-block-sm .reservation-link{
+    padding:20px 10px;
+    /*height:60px;*/
+}
+
+.reservation-status-icon-sm{
+    min-width:60px;
+}
+
+.reservation-link a{
+    color:#3F403F;
+}
+.reservation-link a:hover{
+    color:#717371;
+}
+
+#loading-div{
+    position:absolute;
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
+    top:40%;
+}
+#loading-div img{
+    animation-name: spin;
+    animation-duration: 3000ms;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+}
+@keyframes spin {
+    from {
+        transform:rotate(0deg);
+    }
+    to {
+        transform:rotate(360deg);
+    }
+}
+
+/** Buttons and standard inputs **********************************************/
+.form-control:focus{
+    border-color:#E6E8e655;
+    box-shadow: 0 0 0 0.2rem #E6E8E655;
+}
+.btn-primary:focus, .btn-primary:not(:disabled):not(.disabled):active:focus{
+    box-shadow: 0 0 0 0.2rem #E6E8E655;
+}
+.btn-primary, .btn-primary:not(:disabled):not(.disabled):active{
+    background-color: #3F403F;
+    border-color: #3F403F;
+}
+.btn-primary:hover{
+    background-color: #2B2B2B;
+    border-color: #2B2B2B;
+}
+
+.btn:not(.btn-addon){
+    font-size: 1.2rem;
+    width: calc(50% - 10px);
+    border-radius: 0 !important;
+    padding:12px 10px;
+}
+
+.btn-change-password{
+    width:100% !important;
+}
+.btn-secondary{
+    text-decoration: none;
+}
+
+/** Toggle Switch ************************************************************/
+
+.custom-control{
+    margin-top:5px;
+    color: #E6E8E6;
+}
+
+.switch-label{
+    font-size: 1.2rem;
+}
+
+.custom-control{
+    text-align:left;
+    margin-bottom:10px;
+}
+.custom-control-label{
+    text-decoration:underline;
+}
+.custom-control-label-form{
+    text-transform:uppercase;
+}
+
+.custom-control-input:checked ~ .custom-control-label::before {
+  /*color: #fff;*/
+  border-color: #76ce6f;
+  background-color: #76ce6f;
+}
+.custom-control-input:focus:not(:checked) ~ .custom-control-label::before {
+  border-color: #CED0CE;
+}
+.custom-control-input:focus ~ .custom-control-label::before {
+  box-shadow: 0 0 0 0.2rem rgba(208, 206, 208, 0.25);
+}
+
+.bookmark-block{
+    position: absolute;
+    top: 10px;
+}
+
+hr{
+    border-top-color:#E6E8E6;
+}
+
+/** Admin Sections ***********************************************************/
+
+.delete-group{
+    font-size:1.2rem;
+    text-align:left;
+    color:#E6E8e6;
+    margin-top:35px;
+    margin-left:10px;
+}
+
+.delete-link{
+    margin-left:5px;
+}
+
+.col-form-label{
+    display:block;
+    text-align:left;
+}
+
+#error_1_id_time_blocks{
+    display: block !important;
+}
+.alert-primary, .alert-secondary{
+    color:#E6E8E6;
+    background-color:inherit;
+    border: solid 1px #E6E8E6;
+    border-radius:10px;
+}
+.reservation-confirmation{
+    text-align: left;  
+    border: solid 1px #E6E8E6;
+    border-radius:10px;
+    padding:10px;
+}
+.reservation-confirmation h5{
+    text-transform: uppercase;
+    text-align: center;
+}
+
+th{
+    break-inside:avoid;
+}
+
+@media print
+{    
+    .no-print
+    {
+        display: none !important;
+    }
+}

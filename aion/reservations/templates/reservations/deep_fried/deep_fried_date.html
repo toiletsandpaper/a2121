@@ -1,0 +1,17 @@
+{% load crispy_forms_field %}
+{% load util %}
+<div class="form-group text-left">
+    <label for="{{ field.id_for_label }}" class="{% if field.field.required %} requiredField{% endif %}">
+      {{ field.label|safe }}{% if field.field.required %}<span class="asteriskField">*</span>{% endif %}
+    </label>
+    <input 
+      type="date" 
+      class="form-control date-input" 
+      name="{{ field.name }}" 
+      id="{{ field.id_for_label }}"
+      {% if field.value %} value="{% date_or_string field.value %}{# field.value|date:'Y-m-d'#}" {% endif %}
+      {% if field.field.required %} required {% endif %}
+    >
+</div>
+<div class="field-error text-danger">{{ field.errors|striptags }}</div>
+    {% include 'bootstrap4/layout/help_text_and_errors.html' %}

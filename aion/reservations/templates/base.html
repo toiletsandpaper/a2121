@@ -1,0 +1,121 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    <link rel="shortcut icon" href="{%  static 'reservations/favicon.ico' %}?v=3">
+    <link rel="icon" type="image/png" href="{%  static 'reservations/favicon-32x32.png' %}?v=3" sizes="32x32" />
+    <link rel="icon" type="image/png" href="{%  static 'reservations/favicon-16x16.png' %}?v=3" sizes="16x16" />
+    
+    <!-- Apple touch icons -->
+    <link rel="apple-touch-icon" sizes="57x57" href="{%  static 'aion/apple-icon-57x57.png' %}" />
+    <link rel="apple-touch-icon" sizes="72x72" href="{%  static 'aion/apple-icon-72x72.png' %}" />
+    <link rel="apple-touch-icon" sizes="114x114" href="{%  static 'aion/apple-icon-114x114.png' %}" />
+    <link rel="apple-touch-icon" sizes="144x144" href="{%  static 'aion/apple-icon-144x144.png' %}" />
+    
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:400,400i,700,700i" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{% static 'aion/style.css' %}" />
+
+    {% block css %}
+      <link rel="stylesheet" type="text/css" href="{% static 'reservations/app-style.css' %}" />
+    {% endblock %}
+    
+    <!-- SEO tags -->
+    <title>School X Scheduler {% block title %}{% endblock %}</title>
+    <meta 
+      name="description" 
+      content="This is a sheduling app for school resources. Schools often use 
+      periods, or blocks to schedule classes. This app is designed specifically for 
+      schools to make reserving computer labs or chromebook carts efficient and 
+      intuitive.">
+    <meta name="og:title" property="og:title" content="School X Scheduler: A scheduling app for schools">
+    <meta name="og:description" property="og:description" content="Schools often use 
+      periods, or blocks to schedule classes. This app is designed specifically for 
+      schools to make reserving computer labs or chromebook carts efficient and 
+      intuitive.">
+    <meta property="og:image" content="{% static 'aion/aion-og-image.jpg' %}" />
+    
+  </head>
+  <body>
+    {% block modal %}
+      {% if request.user.is_authenticated %}
+
+        <div class="modal fade" id="menuModal" tabindex="-1" role="dialog" aria-labelledby="menuModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span class="modal-title" id="menuModalLabel">ЗАКРЫТЬ</span>
+                  <span class="modal-dismiss-icon" aria-hidden="true"><i class="fas fa-times-circle"></i></span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <a href="{% url 'home' %}" class="app-links" tabindex="1" accesskey="h">Домой</a>
+                <a href="{% url 'my_resources' %}" class="app-links" tabindex="2" accesskey="r">Создать дисциплину</a>
+                <a href="{% url 'todays_reservations' %}" class="app-links" tabindex="3" accesskey="t">Дисциплины сегодня</a>
+                <a href="{% url 'manage_reservations' %}" class="app-links" tabindex="4" accesskey="m">Управлять моими дисциплинами</a>
+                <a href="{% url 'update-profile' %}" class="app-links" tabindex="5" accesskey="u">Изменить профиль</a>
+                {% if request.user.profile.school_admin %}
+                    <a href="{% url 'building_admin' %}" class="app-links" tabindex="5">Админ панель заведения</a>
+                {% endif %}
+                {% if request.user.is_super %}
+                  <a href="#" class="app-links">Амдин панель приложения</a>
+                {% endif %}
+                <a href="{% url 'logout' %}" class="app-links" tabindex="6">Выйти</a>
+              </div>
+            </div>
+          </div>
+        </div>
+    
+      {% endif %}
+    {% endblock %}
+    
+    <main class="container">
+      {% block menu %}
+        {% if request.user.is_authenticated  %}
+          <div class="text-right menu-link">
+            <a href="#" data-toggle="modal" data-target="#menuModal">МЕНЮ<span class="no-underline" aria-hidden="true">&nbsp;<i class="fas fa-bars" ></i></span>
+            </a>
+          </div>
+        {% endif %}
+      {% endblock %}
+      
+      {% block content %}{% endblock %}
+    </main>
+    
+    <footer class="footer">
+      <a href="{% url 'index' %}">
+        <img class="brand brand-sm-footer" src="{% static 'aion/aion-logo.svg' %}">
+      </a>
+      <div class="container">
+        <div class="row">
+          <div class="col text-right">
+            <a href="{% url 'about' %}">О нас</a> | 
+            <a href="{% url 'contact' %}">Контакты</a>
+          </div>
+        </div>
+      </div>
+     </footer>
+    
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.min.js"
+      integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+      crossorigin="anonymous"></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" 
+      integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" 
+      crossorigin="anonymous"></script>
+    <script 
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" 
+      integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" 
+      crossorigin="anonymous"></script>
+    <script
+      src="{% static 'aion/aion.js' %}"></script>
+    {% block js %}
+    {% endblock %}
+  </body>
+</html>

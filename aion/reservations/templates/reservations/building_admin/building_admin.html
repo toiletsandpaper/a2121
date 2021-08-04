@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h2>Админ Панель Заведения</h2>
+<h3>{{ school }}</h3>
+<a href="{% url 'home' %}" class="app-links" tabindex="1">Домой<span class="no-underline"><i class="fas fa-home"></i></span></a>
+
+<a href="{% url 'new_resource' %}" class="app-links" tabindex="2">Создать дисциплину<span class="no-underline"><i class="fas fa-plus-circle"></i></span></a>
+<a href="{% url 'edit_resources' %}" class="app-links" tabindex="3">Изменить дисциплину<span class="no-underline"><i>({{ number_of_resources }})</i></span></a>
+
+<a href="{% url 'new_time_block' %}" class="app-links" tabindex="4">Создать блок<span class="no-underline"><i class="fas fa-plus-circle"></i></span></a>
+<a href="{% url 'edit_time_blocks' %}" class="app-links" tabindex="5">Изменить блок<span class="no-underline"><i>({{ number_of_time_blocks }})</i></span></a>
+
+<a href="{% url 'select_school_users' %}" class="app-links" tabindex="6">Редактировать админов<span class="no-underline"><i class="fas fa-user-edit"></i></span></a>
+
+<a href="{% url 'new_announcement' %}" class="app-links" tabindex="7">Создать объявление<span class="no-underline"><i class="fas fa-bullhorn"></i></span></a>
+<a href="{% url 'edit_announcements' %}" class="app-links" tabindex="8">Изменить объявление<span class="no-underline"><i class="far fa-edit"></i></span></a>
+
+<a href="{% url 'bulk_reservation' %}" class="app-links" tabindex="9">Объявить дисциплину<span class="no-underline"><i class="fas fa-hat-wizard"></i></span></a>
+{% endblock %}

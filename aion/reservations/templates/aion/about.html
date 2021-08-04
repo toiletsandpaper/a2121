@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+  <a href="{% url 'index' %}">
+    <img class="brand brand-lg" src="{% static 'aion/aion-logo.svg' %}">
+  </a>
+  <h2>Об этом проекте</h2>
+  <p>
+      Это приложения от команды School X на F-S Team Challenge, созданное на основе Aion by Jeff.now.
+  </p>
+  <p>
+    <a href="{% url 'tos' %}">Правила пользования сервисом</a> | 
+    <a href="{% url 'privacy' %}">Политика конфиденциальности</a>
+  </p>
+  <p>
+      If your school district is a member of Aion, you can 
+      <a href="{% url 'signup' %}">signup</a> and 
+      start using Aion today. Otherwise, use our
+      <a href="{% url 'contact' %}">contact</a> form to request access.
+  </p>
+  
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<h2>Edit Block</h2>
+<h3>{{ request.user.profile.location }}</h3>
+<form method="post" class="uniForm">
+    {% if messages %}
+    <!-- Error messaging -->
+        {% for message in messages %}
+            <div class="alert alert-block alert-danger">{{ message }}</div>
+        {% endfor %}
+    {% endif %}
+    
+    {% crispy edit_time_block_form %}
+    
+    <div class="form-group delete-group">
+        <i class="fas fa-exclamation-triangle"></i> 
+        <a href="{% url 'delete_time_block' time_block.id %}" class="delete-link">DELETE BLOCK</a>
+    </div>
+    <small class="helper-text helper-text-block">
+        Deleting a block removes it and all 
+        reservations associated with it.
+    </small>
+    
+</form>
+{% endblock %}

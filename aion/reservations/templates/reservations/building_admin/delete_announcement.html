@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<h2>Удалить объявление</h2>
+<h3>{{ request.user.profile.location }}</h3>
+<a href="{% url 'edit_announcement' announcement.id %}" class="app-links">{{ announcement.title }}<span class="no-underline"><i class="far fa-edit"></i></span></a>
+
+<form method="post" class="uniForm">
+    {% if messages %}
+    <!-- Error messaging -->
+        {% for message in messages %}
+            <div class="text-danger">{{ message }}</div>
+        {% endfor %}
+    {% endif %}
+    
+    {% crispy delete_announcement_form %}
+</form>
+{% endblock %}

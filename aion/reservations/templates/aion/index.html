@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+  <a href="{% url 'index' %}">
+    <img class="brand brand-lg" src="{% static 'aion/aion-logo.svg' %}">
+  </a>
+  <p class="text-center">Приложение для распределения расписания в школах и ВУЗах.<a href="{% url 'about' %}">Подробнее</a></p>
+  <h2>Запустить</h2>
+  <div class="buttonHolder"> 
+    <a class="btn btn-primary btn-dark-gray" href="{% url 'signin' %}">Войти</a>
+  </div>
+  <div class="helper-text">или</div>
+  <div class="buttonHolder">
+    <a class="btn btn-secondary" href="/signup/">Зарегистрироваться</a>
+  </div>
+  
+{% endblock %}

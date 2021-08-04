@@ -1,0 +1,19 @@
+{% load crispy_forms_field %}
+<div class="form-group text-left">
+    <label for="{{ field.id_for_label }}" class="{% if field.field.required %} requiredField{% endif %}">
+      {{ field.label|safe }}{% if field.field.required %}<span class="asteriskField">*</span>{% endif %}
+    </label>
+    <!--<div class="col-8">-->
+    <select 
+      class="form-control select" 
+      name="{{ field.name }}" 
+      id="{{ field.id_for_label }}"
+      {% if field.field.required %} required {% endif %}
+    >
+    </select>
+    <!--</div>-->
+</div>
+<div class="field-error text-danger">
+    {{ field.errors|striptags }}
+</div>
+    {% include 'bootstrap4/layout/help_text_and_errors.html' %}

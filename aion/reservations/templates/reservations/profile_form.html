@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<h2>Изменить профиль</h2>
+{% if messages %}
+    <!-- Error messaging -->
+        {% for message in messages %}
+            <div class="alert alert-block alert-danger">{{ message }}</div>
+        {% endfor %}
+    {% endif %}
+<form method="post" class="uniForm">
+    {% csrf_token %}
+    
+    {% crispy user_form %}
+    {% crispy profile_form %}
+    
+</form>
+<div class="form-group">
+<label for="change_password" class="col-form-label">Управление паролями</label>
+  <div class="buttonHolder">
+    <a class="btn btn-secondary btn-change-password" href="{% url 'password_change' %}" id="change_password">Изменить пароль</a>
+  </div>
+</div>
+{% endblock %}
+
+{% block js %}
+<script>
+$(document).ready(function(){
+    if($('select').attr("selectedIndex") == 0) {
+      $("option[selected]").html('Select a school in your organization').attr('disabled','');
+    }
+});
+</script>
+{% endblock %}

@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block content %}
+  <a href="{% url 'index' %}">
+    <img class="brand brand-lg" src="{% static 'aion/aion-logo.svg' %}">
+  </a>
+  <h2>Администрация приложения</h2>
+  
+  {% if user.is_authenticated %}
+    <p class="errornote">
+        Вы зашли на страницу как {{ username }}, но у вас нет прав для
+        просмотра данной страницы. Хотите зайти под другим пользователем?
+    </p>
+  {% endif %}
+  
+  <form action="{{ app_path }}" method="post" novalidate>
+    {% csrf_token %}
+    {{ form|crispy }}
+    <div class="submit-row">
+      <input type="submit" value="Log in" class="btn btn-primary">
+      <a href="{% url 'signin' %}" class="btn btn-secondary">Домой</a>
+    </div>
+  </form>
+  
+
+{% endblock %}
+
+{% block js %}
+<script>
+$('.form-group').each(function(){
+  
+  // Get the label text
+  var placeholder = $(this).children('label').clone().children().remove().end().text().trim();
+  
+  // Hide the label
+  $(this).children('label').hide();
+  
+  // Use the label text for the input placeholder
+  $(this).children('div').children('input').attr('placeholder', placeholder);
+  
+});
+</script>
+{% endblock %}

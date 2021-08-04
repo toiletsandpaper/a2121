@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+
+
+{% block content %}
+
+{% if request.user.first_name %}
+    <h2>Привет, {{ request.user.first_name }}</h2>
+{% else %}
+    <h2>Привет, {{ request.user.username }}</h2>
+{% endif %}
+
+{% if global_announcements %}
+    {% for announcement in global_announcements %}
+        <div class="helper-text announcement alert alert-primary alert-dismissible fade show" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+             </button>
+            <h3>{{ announcement.title }}</h3>
+            <small>{{ announcement.publish_on }}</small>
+            <div class="announcement-message">
+                {{ announcement.message }}
+            </div>
+        </div>
+    {% endfor %}
+{% endif %}
+
+{% if local_announcements %}
+    {% for announcement in local_announcements %}
+        <div class="helper-text announcement alert alert-secondary alert-dismissible fade show" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            <h3>{{ announcement.title }}</h3>
+            <small>{{ announcement.publish_on }}</small>
+            <div class="announcement-message">
+                {{ announcement.message }}
+            </div>
+        </div>
+    {% endfor %}
+{% endif %}
+
+{% if my_announcements %}
+    <a href="{% url 'announcements' %}" class="app-links" tabindex="0" accesskey="v">Важные объявления<span class="no-underline"><i>({{ my_announcements }})</i></span></a>
+{% endif %}
+
+<a href="{% url 'my_resources' %}" class="app-links" tabindex="1" accesskey="r">Создать дисциплину<span class="no-underline"><i class="fas fa-plus-circle"></i></span></a>
+<a href="{% url 'todays_reservations' %}" class="app-links" tabindex="2" accesskey="t">Дисциплины сегодня<span class="no-underline"><i>({{ todays_reservations }})</i></span></a>
+<a href="{% url 'manage_reservations' %}" class="app-links" tabindex="3" accesskey="m">Управлять моими дисциплинами<span class="no-underline"><i>({{ my_reservations }})</i></span></a>
+<a href="{% url 'update-profile' %}" class="app-links" tabindex="4" accesskey="u">Изменить профиль<span class="no-underline"><i class="fas fa-user-edit"></i></span></a>
+{% if request.user.profile.school_admin %}
+
+    <a href="{% url 'building_admin' %}" class="app-links">Админ Панель Заведения<span class="no-underline"><i class="fas fa-building"></i></span></a>
+
+{% endif %}
+
+{% if request.user.is_super %}
+    <a href="#" class="app-links">Админ Панель Приложения</a>
+{% endif %}
+
+{% endblock %}

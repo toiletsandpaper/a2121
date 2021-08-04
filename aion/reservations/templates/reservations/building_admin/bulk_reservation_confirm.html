@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+<h2>Подтверждение объявления дисциплины</h2>
+<h3>{{ request.user.profile.location }}</h3>
+<h4>{{ resource.name }}</h4>
+
+{% if conflicts %}
+<div class="reservation-confirmation conflicts">
+    <h5>Conflicts</h5>
+    <small class="helper-text-block">Приложение не смогло зарезервировать дисциплину в это время
+    так как кто-то уже зарезервировал своё на это время:</small>
+    <table class="table">
+      <thead>
+        <tr><th>Block</th><th>Date</th><th>Reserved By</th></tr>
+      </thead>
+      <tbody>
+        {% for conflict in conflicts %}
+          <tr>
+            <td>{{ conflict.time_block.name }}</td>
+            <td>{{ conflict.date }}</td>
+            <td><em>{{ conflict.client }}</em></td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+</div>
+{% endif %}
+
+
+{% if successes %}
+<div class="reservation-confirmation conflicts">
+    <h5>Successes</h5>
+    <small class="helper-text-block">Приложение успешно зарезервировало следующие дисциплины:</small>
+    <table class="table">
+      <thead>
+        <tr><th>Block</th><th>Date</th></tr>
+      </thead>
+        <tbody>
+          {% for success in successes %}
+            <tr>
+                <td>{{ success.time_block.name }}</td><td>{{ success.date }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endif %}
+
+<div class="no-print">
+    <a href="{% url 'bulk_reservation' %}" class="app-links" tabindex="1">Объявить дисциплину<span class="no-underline"><i class="fas fa-hat-wizard"></i></span></a>
+
+    <a href="{% url 'home' %}" class="app-links" tabindex="2">Домой<span class="no-underline"><i class="fas fa-home"></i></span></a>
+
+    <a href="{% url 'building_admin' %}" class="app-links" tabindex="2">Админ Панель Заведения<span class="no-underline"><i class="fas fa-building"></i></span></a>
+</div>
+{% endblock %}

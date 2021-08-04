@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h2>Изменить объявление</h2>
+    <h3>{{ request.user.profile.location }}</h3>
+    
+    <a href="{% url 'new_announcement' %}" class="app-links" tabindex="1">Новое объявление<span class="no-underline"><i class="fas fa-plus-circle"></i></span></a>
+
+    {% if global_announcements %}
+        <h4>Объявление для всех в приложении</h4>
+        {% for announcement in global_announcements %}
+                <a href="{% url 'edit_announcement' announcement.id %}" class="app-links">{{ announcement.title }}<span class="no-underline"><i class="far fa-edit"></i></span></a>
+        {% endfor %}
+    {% endif %}
+    {% if org_announcements %}
+        <h4>Объявление для всех в организации</h4>
+        {% for announcement in org_announcements %}
+                <a href="{% url 'edit_announcement' announcement.id %}" class="app-links">{{ announcement.title }}<span class="no-underline"><i class="far fa-edit"></i></span></a>
+        {% endfor %}
+    {% endif %}
+    {% if local_announcements %}
+        <h4>Объявление для группы в организации</h4>
+        {% for announcement in local_announcements %}
+                <a href="{% url 'edit_announcement' announcement.id %}" class="app-links">{{ announcement.title }}<span class="no-underline"><i class="far fa-edit"></i></span></a>
+        {% endfor %}
+    {% else %}
+        <p>Здесь нечего редактировать.</p>
+        
+        <p>Создайте дисциплины для вашего заведение по ссылке выше..</p>
+
+    {% endif %}
+{% endblock %}
