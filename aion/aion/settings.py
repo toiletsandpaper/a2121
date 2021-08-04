@@ -26,9 +26,9 @@ import os
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'v+w(2a-rw**_s(0g)%*&9=b!7x@0^*32g(x@b)^2t#%ni)6fz^') 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-# DEBUG = True
+DEBUG = True
 
-DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False'
+# DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False'
 
 ALLOWED_HOSTS = [
     'aion.run',
@@ -37,7 +37,8 @@ ALLOWED_HOSTS = [
     'ca437448a3004726b8385c4192fda7d9.vfs.cloud9.us-east-1.amazonaws.com',
     '3.227.10.12',
     '0.0.0.0',
-    '127.0.0.1'
+    '127.0.0.1',
+    '45.156.21.87'
     ]
 
 
@@ -193,7 +194,7 @@ EMAIL_HOST = 'smtp.yandex.com'
 EMAIL_HOST_USER = 'SchoolX.Ar4ikov@yandex.ru'
 EMAIL_HOST_PASSWORD = 'W4Hfx0t2Cte8'
 EMAIL_PORT = 465
-EMAIL_USE_SSL = True
+EMAIL_USE_SSL = False
 
 LOGIN_REDIRECT_URL = '/'
 
@@ -214,11 +215,11 @@ DATABASES['default'].update(db_from_env)
 
 # manage.py --deploy report
 SECURE_HSTS_SECONDS=518400 # 6 days
-SECURE_CONTENT_TYPE_NOSNIFF=True
-SECURE_BROWSER_XSS_FILTER=True
-SECURE_SSL_REDIRECT=True
-SESSION_COOKIE_SECURE=True
-CSRF_COOKIE_SECURE=True
-SECURE_HSTS_INCLUDE_SUBDOMAINS=True
-SECURE_HSTS_PRELOAD=True
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https') # Heroku requirement
+SECURE_CONTENT_TYPE_NOSNIFF=False
+SECURE_BROWSER_XSS_FILTER=False
+SECURE_SSL_REDIRECT=False
+SESSION_COOKIE_SECURE=False
+CSRF_COOKIE_SECURE=False
+SECURE_HSTS_INCLUDE_SUBDOMAINS=False
+SECURE_HSTS_PRELOAD=False
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'http') # Heroku requirement
