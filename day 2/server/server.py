@@ -118,6 +118,7 @@ class StudentSimilarity(Flask):
         @self.route("/student/validate_identity", methods=["GET", "POST"])
         def student_validate_identity():
             data = self.data_processing()
+            print(data)
 
             # GET обработка, UI/UX -----------------------
             if request.method == "GET":
@@ -127,7 +128,7 @@ class StudentSimilarity(Flask):
             if "access_token" not in data:
                 return ResponseScheme.error(error=Errors.ACCESS_DENIED)
 
-            if hash(data["access_token"]) != hash(self.secret_token):
+            if data["access_token"] != self.secret_token:
                 return ResponseScheme.error(error=Errors.ACCESS_DENIED)
 
             if "username" not in data:
@@ -139,6 +140,7 @@ class StudentSimilarity(Flask):
                 return ResponseScheme.error(error=Errors.NOT_FOUND)
 
             if not request.files:
+                print(23244343643)
                 return ResponseScheme.error(error=Errors.ACCESS_DENIED)
 
             file = request.files[[x for x in request.files if match(r""".*\.(png|jpg|jpeg)""", request.files[x].filename)][0]]
