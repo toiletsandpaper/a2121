@@ -84,6 +84,9 @@ class StudentSimilarity(Flask):
             if "username" not in data:
                 return ResponseScheme.error(error=Errors.NOT_ENOUGH_PARAMS)
 
+            if "password" not in data:
+                return ResponseScheme.error(error=Errors.NOT_ENOUGH_PARAMS)
+
             if not request.files:
                 return ResponseScheme.error(error=Errors.ACCESS_DENIED)
 
@@ -102,6 +105,7 @@ class StudentSimilarity(Flask):
 
             student_identity = Object()
             student_identity.username = data["username"]
+            student_identity.password = data["password"]
             student_identity.photos = json.dumps([filename + ".jpg"])
 
             database.insert_into("students", student_identity)
@@ -152,7 +156,11 @@ class StudentSimilarity(Flask):
             x_arrays = self.image_preparation.get_photos_set(old_student[0].username, random_student.username, filename + ".jpg")
             prediction = self.model.predict(*x_arrays)
 
-            return ResponseScheme.success({"username": data["username"], "is_similar": prediction})
+            response = {"username": data["username"], "is_similar": prediction}
+            if prediction is True:
+                response["password"] = old_student[0].password
+
+            return ResponseScheme.success(response)
 
     def run(self, host: t.Optional[str] = None, port: t.Optional[int] = None, debug: t.Optional[bool] = None,
             load_dotenv: bool = True, **options: t.Any) -> None:

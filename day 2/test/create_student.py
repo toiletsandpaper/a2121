@@ -4,7 +4,8 @@ token = "gff7e8df9bbd450c8a5c2gbd35762aa872g92e96e2chf9d0ahee3c9efd7bcge2fa2g98d
 
 response = post("http://127.0.0.1:8081/student/create_identity", data={
     "access_token": token,
-    "username": "ToiletSandPaper"
-}, files={"photo.jpg": open("l1.jpg", "rb").read()})
+    "username": "Ar4ikov",
+    "password": "SchoolXPassword"
+}, files={"photo.jpg": open("d1.jpg", "rb").read()})
 
 print(response.json())

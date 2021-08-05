@@ -9,6 +9,7 @@ database.commit(
         CREATE TABLE IF NOT EXISTS `students` (
             `id` INTEGER PRIMARY KEY AUTOINCREMENT ,
             `photos` TEXT DEFAULT '[]' ,
-            `username` TEXT(100) NOT NULL
+            `username` TEXT(100) NOT NULL ,
+            `password` TEXT(100) NOT NULL
         );
     """)
