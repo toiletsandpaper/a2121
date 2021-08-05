@@ -5,6 +5,13 @@
     <title>{{ title }}</title>
 </head>
 <body>
-
+    <form>
+        <h5>Введите ваш логин на сайте:</h5>
+        <p><input name="username" type="text" /></p>
+        <h5>Загрузите вашу фотографию</h5>
+        <p><input type="file" name="photo" multiple accept="iamge/png,image/jpg,image/jpeg">
+        <p><input type="hidden" name="access_token" value="gff7e8df9bbd450c8a5c2gbd35762aa872g92e96e2chf9d0ahee3c9efd7bcge2fa2g98d01e4f4e267548a5" /></p>
+        <p><input type="submit" value="Отправить" formaction="/student/validate_identify"/ method="post"></p>
+    </form>
 </body>
 </html>
