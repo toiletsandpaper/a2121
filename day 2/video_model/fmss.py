@@ -1,7 +1,7 @@
 import argparse
 import cv2
 import time
-from skimage.measure import compare_ssim
+import skimage.measure as compare_ssim
 
 
 def fmss(upload_videos, filename_1, filename_2):

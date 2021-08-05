@@ -5,13 +5,13 @@
     <title>{{ title }}</title>
 </head>
 <body>
-    <form method="post" action="/student/validate_identity" enctype="multipart/form-data">
+    <form method="post" action="/video/upload" enctype="multipart/form-data">
         <h5>Введите вашу почту и сразу после обработки видео сервером - мы вам пришлём результат на почту:</h5>
         <p><input name="email" type="text" /></p>
         <h5>Введите ссылку на Youtube-видео (пример: https://www.youtube.com/watch?v=dQw4w9WgXcQ) </h5>
         <p><input name="video_link" type="text"></p>
         <p><input type="hidden" name="access_token" value="gff7e8df9bbd450c8a5c2gbd35762aa872g92e96e2chf9d0ahee3c9efd7bcge2fa2g98d01e4f4e267548a5" /></p>
-        <p><input type="submit" formmethod="post" formaction="/student/validate_identity" value="Отправить"></p>
+        <p><input type="submit" formmethod="post" formaction="/video/upload" value="Отправить"></p>
     </form>
 </body>
 </html>
