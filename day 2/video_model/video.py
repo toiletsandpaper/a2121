@@ -57,11 +57,11 @@ class VideoProcessing(Thread):
         return True
 
     def run(self):
-        process = sp.Popen([f"""youtube-dl -o "%(id)s.%(ext)s" --format mp4 {self.video_link}"""], shell=True,
-                                stderr=sp.PIPE, stdout=sp.PIPE, stdin=sp.PIPE, cwd=self.upload_videos)
+        process = sp.Popen([f"""youtube-dl -o "uploads/videos/%(id)s.%(ext)s" --format mp4 {self.video_link}"""], shell=True,
+                                stderr=sp.PIPE, stdout=sp.PIPE, stdin=sp.PIPE)
 
         response, error = process.communicate()
-        filename = response
+        filename = response.decode()
 
         for video in listdir(self.upload_videos):
             if path.isdir(video):

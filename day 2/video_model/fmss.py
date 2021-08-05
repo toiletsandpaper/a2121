@@ -14,8 +14,8 @@ def fmss(upload_videos, filename_1, filename_2):
     parser.add_argument("--tolerance", help="define tolerance for SSIM", default=0.8)
     FLAG = parser.parse_args()
 
-    FLAG.o = f"{upload_videos + filename_1}"
-    FLAG.t = f"{upload_videos + filename_2}"
+    FLAG.o = "uploads/videos/" + filename_1
+    FLAG.t = "uploads/videos/" + filename_2
     FLAG.debug = "N"
     FLAG.resize = "Y"
 
