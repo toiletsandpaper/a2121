@@ -11,7 +11,7 @@ class Errors(Enum):
     NOT_FOUND = (5, 404, "not_found", "Не найдено")
     NOT_ENOUGH_PARAMS = (6, 400, "not_enough_params", "Не все параметры были указаны в запросе")
     MODEL_IS_NOT_LOADED = (7, 500, "model_is_not_loaded", "Модель не была загружена, выполнение невозможно")
-
+    ALREADY_EXISTS = (8, 500, "already_exists", "Пользователь уже существует")
 
 class ResponseScheme:
     @staticmethod

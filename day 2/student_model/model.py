@@ -23,7 +23,7 @@ class StudentSiameseModel:
         self.siamese_network = None
 
         self.weights_name = "a2121_schoolx_siamese_weights.h5"
-        self.similarity_dot = .505
+        self.similarity_dot = .6
 
     def build_model(self):
         base_cnn = resnet.ResNet50(
@@ -61,7 +61,7 @@ class StudentSiameseModel:
 
         self.siamese_model = self.SiameseModel(self.siamese_network)
         self.siamese_model.compile(optimizer=optimizers.Adam(0.0001))
-        self.siamese_model.build = True
+        self.siamese_model.built = True
         self.siamese_model.load_weights(
             path.join(path.dirname(__file__), self.weights_name)
         )
@@ -69,7 +69,7 @@ class StudentSiameseModel:
         return self.embedding, self.siamese_network, self.siamese_model
 
     def predict(self, uploaded_image, student_image, random_student_image, similarity_dot=None):
-        if any(self.embedding is None, self.siamese_network is None, self.siamese_model is None):
+        if any([self.embedding is None, self.siamese_network is None, self.siamese_model is None]):
             raise ImportError("There is no preloaded weights, turns back.")
 
         if similarity_dot is None:
@@ -90,7 +90,9 @@ class StudentSiameseModel:
         positive_similarity = cosine_similarity(anchor_embedding, positive_embedding)
         negative_similarity = cosine_similarity(anchor_embedding, negative_embedding)
 
-        if positive_similarity > negative_similarity and positive_similarity > similarity_dot:
+        print(positive_similarity.numpy(), negative_similarity.numpy())
+
+        if positive_similarity.numpy() > negative_similarity.numpy() and positive_similarity.numpy() > similarity_dot:
             return True
 
         else:
