@@ -12,6 +12,7 @@ from uuid import uuid4 as uuid
 from server.database_preload import *
 from student_model.normalization import ImagePreparation
 from student_model.model import StudentSiameseModel
+from video_model.video import VideoProcessing
 
 
 class StudentSimilarity(Flask):
@@ -86,6 +87,19 @@ class StudentSimilarity(Flask):
 
             if data["access_token"] != self.secret_token:
                 return ResponseScheme.error(error=Errors.ACCESS_DENIED)
+
+            if "email" not in data:
+                return ResponseScheme.error(error=Errors.NOT_ENOUGH_PARAMS)
+
+            if "video_link" not in data:
+                return ResponseScheme.error(error=Errors.NOT_ENOUGH_PARAMS)
+
+            video_thread = VideoProcessing(data["video_link"], data["email"], self.videos_path)
+            video_thread.start()
+
+            return ResponseScheme.success({
+                "video_link": data["video_link"]
+            })
 
         @self.route("/student/create_identity", methods=["GET", "POST"])
         def student_create_identity():
