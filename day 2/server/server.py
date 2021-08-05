@@ -71,10 +71,32 @@ class StudentSimilarity(Flask):
         def index():
             return ResponseScheme.success({"text_message": "Hello, Archipelag 2021!"})
 
-        @self.route("/student/create_identity", methods=["POST"])
+        @self.route("/video/upload", methods=["GET", "POST"])
+        def video_upload():
+            data = self.data_processing()
+            print(data)
+
+            # GET обработка, UI/UX -----------------------
+            if request.method == "GET":
+                return render_template("upload_video.html", title="Upload_photo")
+
+            # POST обработка -----------------------------
+            if "access_token" not in data:
+                return ResponseScheme.error(error=Errors.ACCESS_DENIED)
+
+            if data["access_token"] != self.secret_token:
+                return ResponseScheme.error(error=Errors.ACCESS_DENIED)
+
+        @self.route("/student/create_identity", methods=["GET", "POST"])
         def student_create_identity():
             data = self.data_processing()
             print(data)
+
+            # GET обработка, UI/UX -----------------------
+            if request.method == "GET":
+                return render_template("create_student.html", title="Upload_photo")
+
+            # POST обработка -----------------------------
             if "access_token" not in data:
                 return ResponseScheme.error(error=Errors.ACCESS_DENIED)
 
