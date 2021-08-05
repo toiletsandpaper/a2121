@@ -21,37 +21,38 @@ class VideoProcessing(Thread):
     @staticmethod
     def success_text(video_link):
         return f"""
-        Уважаемый пользователь!
-        Ваш видеопоток, размещенный по адресу {video_link} был успешно загружен на сервер!
+        Successful upload!
+        Video link: {video_link}
         
-        С уважением,
-        Команда School X DSTU
+        Best regards
+        Team School X DSTU
         """
 
     @staticmethod
     def failed_text(video_link):
         return f"""
-            Уважаемый пользователь!
-            Ваш видеопоток, размещенный по адресу {video_link} не был загружен на сервер!
-            Наш алгоритм заметил схожесть данного видеоряда с уже имеющимся на сервере!
-
-            С уважением,
-            Команда School X DSTU
+            Failed upload! That video is similiar to another video on this server 
+            Video link: {video_link}
+            
+            Best regards
+            Team School X DSTU
             """
 
-
-    def send_email_feedback(self, text, video_link):
+    def send_email_feedback(self, text):
         text = text
-        message = 'From: {}\nTo: {}\nSubject: {}\n\n{}'.format(self.school_x_email,
-                                                               self.email,
-                                                               "Обработка и загрузка Вашего видеопотока",
-                                                               text)
+        message = "\r\n".join([
+            f"From: {self.school_x_email}",
+            f"To: {self.email}",
+            "Subject: Обработка Вашего видеопотока",
+            "",
+            str(text)
+        ])
         server = smtplib.SMTP_SSL('smtp.yandex.com')
         server.set_debuglevel(1)
         server.ehlo(self.school_x_email)
         server.login(self.school_x_email, self.school_x_password)
         server.auth_plain()
-        server.sendmail(self.school_x_email, self.email, message)
+        server.sendmail(self.school_x_email, [self.email], message)
         server.quit()
 
         return True
@@ -70,10 +71,10 @@ class VideoProcessing(Thread):
             similarity = fmss(self.upload_videos, filename, video)
 
             if similarity > 0.5:
-                self.send_email_feedback(video_link=self.video_link, text=self.failed_text(self.video_link))
+                self.send_email_feedback(text=self.failed_text(self.video_link))
                 break
 
-        self.send_email_feedback(video_link=self.video_link, text=self.success_text(self.video_link))
+        self.send_email_feedback(text=self.success_text(self.video_link))
 
 
 
