@@ -27,13 +27,13 @@ class StudentSimilarity(Flask):
         self.secret_token = secret_token
         self.secret_key = "!TOP_SECRET_KEY"
 
-        self.uploads_path = path.normpath(path.join(path.dirname(__file__), "../", "uploads\\"))
-        self.photos_path = path.join(self.uploads_path, "photos\\")
-        self.videos_path = path.join(self.uploads_path, "videos\\")
+        self.uploads_path = path.normpath(path.join(path.dirname(__file__), "../", "uploads/"))
+        self.photos_path = path.join(self.uploads_path, "photos/")
+        self.videos_path = path.join(self.uploads_path, "videos/")
 
-        self.student_files = path.normpath(path.join(path.dirname(__file__), "../student_files\\"))
-        self.student_photos = path.join(self.student_files, "photos\\")
-        self.student_videos = path.join(self.student_files, "videos\\")
+        self.student_files = path.normpath(path.join(path.dirname(__file__), "../student_files/"))
+        self.student_photos = path.join(self.student_files, "photos/")
+        self.student_videos = path.join(self.student_files, "videos/")
 
         self.image_preparation = ImagePreparation(self.photos_path, self.student_photos)
         self.model = StudentSiameseModel()
