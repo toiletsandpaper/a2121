@@ -1,7 +1,7 @@
 import argparse
 import cv2
 import time
-import skimage.measure as compare_ssim
+from skimage.measure import compare_ssim
 
 
 def fmss(upload_videos, filename_1, filename_2):
@@ -10,17 +10,22 @@ def fmss(upload_videos, filename_1, filename_2):
     parser.add_argument("--t", help="video file what you want to evaluate")
     parser.add_argument("--method", help="how to compare? SSIM, ORB, SIFT, FLANN_SIFT, FLANN_ORB, default=SSIM", default="SSIM")
     parser.add_argument("--debug", help="if Y, shows print. otherwise: dont show anything. default: Y", default="Y")
-    parser.add_argument("--resize", help="each image is converted to 32x32", default="N")
+    parser.add_argument("--resize", help="each image is converted to 32x32", default="Y")
     parser.add_argument("--tolerance", help="define tolerance for SSIM", default=0.8)
     FLAG = parser.parse_args()
 
     FLAG.o = "uploads/videos/" + filename_1
     FLAG.t = "uploads/videos/" + filename_2
+
+    print(FLAG.o, FLAG.t)
+    print(FLAG.method)
+    print(FLAG)
+
     FLAG.debug = "N"
     FLAG.resize = "Y"
 
-    origin_video = cv2.VideoCapture(FLAG.o)
-    eval_video = cv2.VideoCapture(FLAG.t)
+    origin_video = cv2.VideoCapture(FLAG.o, cv2.CAP_FFMPEG)
+    eval_video = cv2.VideoCapture(FLAG.t, cv2.CAP_FFMPEG)
 
     frame = 0
     max_ssim = 0
@@ -118,5 +123,8 @@ def fmss(upload_videos, filename_1, filename_2):
         if ssim >= tolerance:
             similar_counter += 1
 
-    # print(str(similar_counter) + "/" + str(int(eval_video.get(cv2.CAP_PROP_FRAME_COUNT))))
-    return float(similar_counter / int(eval_video.get(cv2.CAP_PROP_FRAME_COUNT)))
+    a = str(similar_counter) + "/" + str(int(eval_video.get(cv2.CAP_PROP_FRAME_COUNT)))
+    b = float(similar_counter / int(eval_video.get(cv2.CAP_PROP_FRAME_COUNT)))
+
+    print(a, b)
+    return b
